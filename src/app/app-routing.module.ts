@@ -24,10 +24,12 @@ const routes: Routes = [
   },
   {
     path: 'unauthorized',
+    canActivate: [AuthGuard],
     component: UnauthorizedComponent,
   },
   {
     path: '**',
+    canActivate: [AuthGuard],
     component: NotFoundComponent,
   },
 ];

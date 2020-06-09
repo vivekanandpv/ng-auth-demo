@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,16 @@ import { AuthService } from '../_services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthService) {}
+  returnUrl: string;
+  constructor(
+    private authService: AuthService,
+    private ar: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.returnUrl = this.ar.snapshot.queryParamMap.get('returnUrl');
+  }
 
   loginUser() {
     this.authService.login({
@@ -17,6 +25,7 @@ export class LoginComponent implements OnInit {
       email: 'user@domain.com',
       role: ['user'],
     });
+    this.navigate();
   }
 
   loginAdmin() {
@@ -25,9 +34,18 @@ export class LoginComponent implements OnInit {
       email: 'admin@domain.com',
       role: ['user', 'admin'],
     });
+    this.navigate();
   }
 
   logout() {
     this.authService.logout();
+  }
+
+  navigate() {
+    if (this.returnUrl) {
+      this.router.navigateByUrl(this.returnUrl);
+    } else {
+      this.router.navigate(['/news']);
+    }
   }
 }
