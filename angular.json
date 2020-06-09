@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ng-auth-demo"
+    }
+  },
+  "defaultProject": "ng-auth-demo",
+  "cli": {
+    "analytics": "e2d753a9-2711-4c02-9584-410ca467c107"
+  }
 }
