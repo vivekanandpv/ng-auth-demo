@@ -5,14 +5,17 @@ import { NewsComponent } from './news/news.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
   {
     path: 'admin',
+    canActivate: [AuthGuard],
     component: AdminComponent,
   },
   {
     path: 'news',
+    canActivate: [AuthGuard],
     component: NewsComponent,
   },
   {
