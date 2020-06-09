@@ -6,11 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { AdminGuard } from './_guards/admin.guard';
 
 const routes: Routes = [
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AdminGuard],
     component: AdminComponent,
   },
   {
