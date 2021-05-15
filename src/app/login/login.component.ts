@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,33 +10,32 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   returnUrl: string;
+  form: FormGroup;
   constructor(
     private authService: AuthService,
     private ar: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      username: [''],
+      password: [''],
+    });
+  }
 
   ngOnInit(): void {
     this.returnUrl = this.ar.snapshot.queryParamMap.get('returnUrl');
   }
 
-  loginUser() {
-    this.authService.login({
-      username: 'General User',
-      email: 'user@domain.com',
-      role: ['user'],
+  loginUser() {}
+
+  login() {
+    this.authService.login(this.form.value).subscribe((data) => {
+      console.log('Server', data);
     });
-    this.navigate();
   }
 
-  loginAdmin() {
-    this.authService.login({
-      username: 'Admin User',
-      email: 'admin@domain.com',
-      role: ['user', 'admin'],
-    });
-    this.navigate();
-  }
+  loginAdmin() {}
 
   logout() {
     this.authService.logout();
